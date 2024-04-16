@@ -34,17 +34,15 @@ def health():
 @app.route('/predict', methods=['POST'])
 def predict():
     feature_dict = request.get_json()
-    print(request)
     if not feature_dict:
         return {
-            'error': 'Body is empty.',
+            'error': 'Body is empty.'
         }, 500
 
     try:
         response = get_model_response(feature_dict)
-except ValueError as e:
-    print("Error:", str(e))
-    return {'error': str(e)}, 500
+    except ValueError as e:
+        return {'error': str(e).split('\n')[-1].strip()}, 500
 
     return response, 200
 

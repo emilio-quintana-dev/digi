@@ -1,23 +1,25 @@
+from tensorflow import keras
+import numpy as np
 import pandas as pd
+import pickle
+
+from ms import desc_vectorizer
+from ms import label_encoder
 from ms import model
 
-
 def predict(X, model):
-    prediction = model.predict(X)[0]
-    print("Prediction")
-    print(prediction)
+    X_transformed = desc_vectorizer.transform(X['DESCRIPTION']).toarray()
+    probabilities = model.predict(X_transformed)[0]
 
-    return prediction
+    max_index = np.argmax(probabilities)
+
+    max_category = label_encoder.classes_[max_index]
+
+    return max_category
 
 
 def get_model_response(json_data):
-    print("JSON Data")
-    print(json_data)
-
     X = pd.DataFrame.from_dict(json_data)
-    print("X")
-    print(X)
-
     prediction = predict(X, model)
 
     return {
