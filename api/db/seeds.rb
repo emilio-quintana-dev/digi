@@ -1,4 +1,4 @@
-user = User.create!(email: "emilioquintana90@gmail.com", password: "password123")
+User.create!(email: "emilioquintana90@gmail.com", password: "password123")
 
 api_gateway = Prometeo::ApiGateway.new
 

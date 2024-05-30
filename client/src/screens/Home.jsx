@@ -21,8 +21,8 @@ export default function Home({ navigation }) {
     const fetchAccounts = async () => {
       try {
         const response = await axios.get(
-          // "http://localhost:3000/users/1/accounts",
-          "http://192.168.0.7:3000/users/1/accounts",
+          "http://localhost:3000/users/1/accounts",
+          // "http://192.168.0.7:3000/users/1/accounts",
         );
 
         if (response.data) {
@@ -38,8 +38,8 @@ export default function Home({ navigation }) {
     const fetchTransactions = async () => {
       try {
         const response = await axios.get(
-          // "http://localhost:3000/users/1/transactions",
-          "http://192.168.0.7:3000/users/1/transactions",
+          "http://localhost:3000/users/1/transactions",
+          // "http://192.168.0.7:3000/users/1/transactions",
         );
 
         if (response.data) {

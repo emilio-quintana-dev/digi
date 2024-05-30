@@ -35,8 +35,8 @@ const LinkAccountModal = ({ selectedProvider, navigation, setVisible }) => {
 
     try {
       const response = await axios.post(
-        // "http://localhost:3000/provider_auth_sessions",
-        "http://192.168.0.7:3000/provider_auth_sessions",
+        "http://localhost:3000/provider_auth_sessions",
+        // "http://192.168.0.7:3000/provider_auth_sessions",
         {
           provider_id: selectedProvider.id,
           user_id: 1,

@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+
+import axios from "axios";
+
+import { StyleSheet, ScrollView } from "react-native";
 import {
   ActivityIndicator,
   Portal,
@@ -10,8 +13,6 @@ import {
 
 import ProviderRow from "../components/ProviderRow";
 import LinkAccountModal from "../components/LinkAccountModal";
-
-import axios from "axios";
 
 const styles = StyleSheet.create({
   container: { padding: 20 },
@@ -54,8 +55,8 @@ export default function Banks({ navigation }) {
       setIsLoading(true);
 
       try {
-        // const response = await axios.get("http://localhost:3000/providers");
-        const response = await axios.get("http://192.168.0.7:3000/providers");
+        const response = await axios.get("http://localhost:3000/providers");
+        // const response = await axios.get("http://192.168.0.7:3000/providers");
 
         if (response.data) {
           setProviders(response.data);

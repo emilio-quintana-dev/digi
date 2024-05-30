@@ -16,7 +16,7 @@ class UsersController < ApplicationController
 
   def transactions
     transactions = Rails.cache.fetch("#{cache_key_for_user}_transactions", expires_in: 12.hours) do
-      user_transactions.limit(10).to_a
+      user_transactions.limit(50).to_a
     end
 
     if transactions.any?
@@ -42,7 +42,7 @@ class UsersController < ApplicationController
       )
 
       transaction_responses.each do |transaction_response|
-        transaction = Transaction.find_by(prometeo_account_id: transaction_response.id)
+        transaction = Transaction.find_by(reference: transaction_response.reference)
 
         if transaction
           transaction.sync(transaction_response)
@@ -56,12 +56,21 @@ class UsersController < ApplicationController
             extra_data: transaction_response.extra_data,
             prometeo_account_id: transaction_response.id,
             reference: transaction_response.reference,
+            digibox_category: get_digibox_category(transaction_response),
+            category: get_digibox_category(transaction_response),
           )
         end
-      rescue ActiveModel::RangeError => exception
-        binding.pry
+      rescue ActiveModel::RangeError => _exception
       end
     end
+  end
+
+  def get_digibox_category(transaction_response)
+    digibox_api_gateway.get_category(transaction_response.detail)
+  end
+
+  def digibox_api_gateway
+    Digibox::ApiGateway.new
   end
 
   def sync_accounts

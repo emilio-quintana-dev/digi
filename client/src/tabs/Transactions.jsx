@@ -1,34 +1,9 @@
-import { StyleSheet, Text, ScrollView, View } from "react-native";
-import { Chip } from "react-native-paper";
+import { Text, ScrollView, View } from "react-native";
+import { Card } from "react-native-paper";
+
+import CategoryChip from "../components/CategoryChip";
 
 import capitalize from "lodash/capitalize";
-
-const styles = StyleSheet.create({
-  container: { margin: 10 },
-  transactionName: {
-    color: "white",
-    width: 200,
-    // The styles below are for debugging purposes.
-    // borderWidth: 1,
-    // borderColor: "white",
-  },
-  transactionAmount: { fontWeight: "bold", color: "white" },
-  row: {
-    marginTop: 10,
-    marginBottom: 10,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    // The styles below are for debugging purposes.
-    // borderWidth: 1,
-    // borderColor: "white",
-  },
-  dateText: {
-    textTransform: "uppercase",
-    fontWeight: "bold",
-    color: "gray",
-  },
-});
 
 const Transactions = ({ transactions }) => {
   const groupAndSortTransactions = (transactions) => {
@@ -55,31 +30,60 @@ const Transactions = ({ transactions }) => {
   const groupedAndSortedTransactions = groupAndSortTransactions(transactions);
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={{
+        margin: 10,
+      }}
+    >
       {groupedAndSortedTransactions.length === 0 && (
-        <Text style={styles.containerAction}>No transactions.</Text>
+        <Text>No transactions.</Text>
       )}
 
       {groupedAndSortedTransactions.map(
         ([date, transactionsForDate], index) => (
           <View key={index}>
-            <Text style={styles.dateText}>{date}</Text>
+            <Text
+              style={{
+                textTransform: "uppercase",
+                fontWeight: "bold",
+                color: "gray",
+              }}
+            >
+              {date}
+            </Text>
 
             {transactionsForDate.map((transaction, index) => (
-              <View style={styles.row} key={index}>
-                <Text style={styles.transactionName} numberOfLines={1}>
+              <View
+                style={{
+                  paddingTop: 10,
+                  paddingBottom: 10,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+                key={index}
+              >
+                <Text
+                  style={{
+                    color: "white",
+                    width: 100,
+                    maxWidth: 200,
+                  }}
+                  numberOfLines={1}
+                >
                   {capitalize(transaction.detail)}
                 </Text>
 
-                <Chip
-                  icon="pizza"
-                  compact
-                  textStyle={{ fontSize: 10, textTransform: "uppercase" }}
-                >
-                  Food
-                </Chip>
+                <CategoryChip category={transaction.category} />
 
-                <Text style={styles.transactionAmount}>
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    color: "white",
+                    width: 75,
+                    textAlign: "right",
+                  }}
+                >
                   ${transaction.debit || transaction.credit}
                 </Text>
               </View>
