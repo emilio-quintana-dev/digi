@@ -1,0 +1,6 @@
+To active the python virtual environment: `source env/bin/activate`
+To run flask server: `flask run -p 8000`
+To run a prediction through the model: 
+`curl -d '[{ "DESCRIPTION": "Retiro" }]' -H "Content-Type: application/json" -X POST http://127.0.0.1:8000/predict`
+To run flask server image in a container: `docker run -p 8000:8000 digi_prediction_engine`
+
